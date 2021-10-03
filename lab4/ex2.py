@@ -1,11 +1,16 @@
 import pygame as pg
 import numpy as np
 from pygame.draw import *
-
 pg.init()
 
 screen = pg.display.set_mode((1100, 800))
 
+def draw_ellipse_angle(surface, color, rect, angle, width=0):
+    target_rect = pg.Rect(rect)
+    shape_surf = pg.Surface(target_rect.size, pg.SRCALPHA)
+    ellipse(shape_surf, color, (0, 0, *target_rect.size))
+    rotated_surf = pg.transform.rotate(shape_surf, angle)
+    surface.blit(rotated_surf, rotated_surf.get_rect(center = target_rect.center))
 def circle_contour(color, radius, coordinates):
     circle(screen, color, coordinates, radius)
     circle(screen, black, coordinates, radius, 1)
@@ -59,9 +64,11 @@ circle(screen, red, (970, 125), 27)
 polygon(screen, yellow, [(160, 450), (90, 380), (170, 350)])
 circle(screen, red, (925, 107), 27)
 circle(screen, red, (970, 125), 27)
-circle(screen, red, (145, 340), 24)
-circle(screen, brown, (105, 360), 24)
-circle(screen, white, (110, 325), 24)
+
+draw_ellipse_angle(screen, red, [120, 325, 50, 40], 20, 2)
+draw_ellipse_angle(screen, brown, [80, 340, 50, 40], 20, 2)
+draw_ellipse_angle(screen, white, [90, 310, 50, 40], 20, 2)
+
 
 pg.display.update()
 clock = pg.time.Clock()
